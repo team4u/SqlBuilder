@@ -1,10 +1,10 @@
-#SqlBuilder - SQL Builder Utilities
+# SqlBuilder - SQL Builder Utilities
 
 [TOC]
 
 快速简单生成标准SQL字符串的工具类
 
-##Maven
+## Maven
 
 Add the following dependency to your POM:
 
@@ -32,17 +32,17 @@ Add the following dependency to your POM:
 </dependency>
 ```
 
-##System Requirements
+## System Requirements
 
 * JDK 1.7+
 
-##Features
+## Features
 
 * 简单快速构建的SQL字符串
 * 轻量级ORM
 * 方便与其他持久化框架集成
 
-##SqlBuilders
+## SqlBuilders
 
 通过SqlBuilders提供的各种API,可以方便地构建各种复杂的SQL字符串.
 
@@ -170,7 +170,7 @@ insert into test (a, b) values (?, ?)
 params=[1, 2]
 ```
 
-###自定义SQL
+### 自定义SQL
 
 如果存在更复杂的SQL语句, 无法用以上的SqlBuilder完成,可以直接自定义SQL进行处理:
 
@@ -198,7 +198,7 @@ select * from test a = ? and b = ?
 params=[1, 2]
 ```
 
-###SQL文件
+### SQL文件
 
 除了直接在代码中定义SQL外,还可以从外部文件加载SQL.
 
@@ -245,7 +245,7 @@ WHERE name = ?;
 params=[x]
 ```
 
-#####SQL修改自动加载
+##### SQL修改自动加载
 
 FileSqlContentManager支持SQL文件修改后自动刷新，执行watch可设置监控周期（秒）方法。
 
@@ -253,7 +253,7 @@ FileSqlContentManager支持SQL文件修改后自动刷新，执行watch可设置
 SqlContents.getInstance().register(new FileSqlContentManager("test.sql").watch(5));
 ```
 
-#####自定义SQL内容管理器
+##### 自定义SQL内容管理器
 
 你可以定制自己的SQL内容管理器，如从数据库中加载SQL源，只需要实现SqlContentManager接口即可.
 
@@ -315,11 +315,11 @@ public interface SqlContentManager extends Registrar.Applicant<String> {
 SqlContents.getInstance().register(new DbSqlContentManager());
 ```
 
-###Dialect
+### Dialect
 
 针对不同数据库中的非标准SQL部分,通过Dialect进行处理.
 
-####获取Dialect
+#### 获取Dialect
 
 SqlBuidler可以根据dataSource自动获取对应数据库的Dialect
 
@@ -327,7 +327,7 @@ SqlBuidler可以根据dataSource自动获取对应数据库的Dialect
 Dialect dialect = DialectManager.INSTANCE.getDialect(dataSource)
 ```
 
-####count
+#### count
 
 ```java
 dialect.createCountSelect("select * from test where id = ?");
@@ -339,7 +339,7 @@ dialect.createCountSelect("select * from test where id = ?");
 select count(1) from (select * from test where id = ?) count_table
 ```
 
-####分页
+#### 分页
 
 
 ```java
@@ -352,11 +352,11 @@ dialect.createPageSelect("select * from test where id = ?", 1, 0);
 select * from test where id = ? limit 1 offset 0
 ```
 
-##ORM
+## ORM
 
 SqlBuilder实现了轻量级的ORM功能
 
-###实体类定义
+### 实体类定义
 
 SqlBuilder定义了三种基本注解,分别为：
 
@@ -432,7 +432,7 @@ public class TwoIdEntity {
 }
 ```
 
-###Select
+### Select
 
 实体类的查询与普通查询基本一致,将根据注解自动映射为数据库对应的表名以及字段名
 
@@ -487,7 +487,7 @@ select * from test2 where id1 = ? and id2 = ?
 params=[1, 2]
 ```
 
-###Update
+### Update
 
 实体类的更新与普通更新基本一致.
 
@@ -541,7 +541,7 @@ update test set name1 = ? where id = ?
 params=[a, 1]
 ```
 
-###Insert
+### Insert
 
 实体类的插入与普通插入基本一致.
 
@@ -576,7 +576,7 @@ insert into test (id, name_and_age, name1) values (?, ?, ?)
 params=[1, b, a]
 ```
 
-###Delete
+### Delete
 
 实体类的删除与普通删除基本一致.
 
@@ -609,7 +609,7 @@ delete from test where id = ?
 params=[1]
 ```
 
-###Action
+### Action
 
 对于实体类的操作时,可能存在一些预处理,比如插入操作可能需要采取某些主键生成策略。
 
@@ -626,7 +626,7 @@ params=[1]
 
 其中AFTER系列动作仅为预留定义,SqlBuilder不做处理,SqlBuilder仅处理BEFORE系列动作
 
-####UUID主键生成策略
+#### UUID主键生成策略
 
 SqlBuilder已实现UUID主键生成策略,可以直接使用:
 
@@ -661,7 +661,7 @@ params=[FA90F2A45BC94F01B28362864ADCED62, b, a]
 
 注意，id字段已自动赋值为FA90F2A45BC94F01B28362864ADCED62
 
-####自定义动作执行者
+#### 自定义动作执行者
 
 需要实现ActionInvoker接口
 
@@ -681,7 +681,7 @@ public interface ActionInvoker extends Registrar.Applicant<String> {
 
 具体实现请参考UUIDForPkInvoker
 
-###第三方注解支持
+### 第三方注解支持
 
 SqlBuilder默认支持自带的三种注解,同时也支持标准JPA注解以及Nutz实体类注解,只需要将默认的SqlBuilders换成对应的专属SqlBuilders即可
 
