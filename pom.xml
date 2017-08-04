@@ -108,4 +108,12 @@
             <url>https://dl.bintray.com/team4u/team4u</url>
         </repository>
     </repositories>
+
+
+    <distributionManagement>
+        <repository>
+            <id>team4u-repo</id>
+            <url>https://api.bintray.com/maven/team4u/team4u/SqlBuilder/;publish=1</url>
+        </repository>
+    </distributionManagement>
 </project>

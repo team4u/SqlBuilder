@@ -7,6 +7,8 @@ import org.team4u.sql.builder.builder.DeleteSqlBuilder;
 
 import java.util.Arrays;
 
+import static org.team4u.sql.builder.expression.SqlExpressions.*;
+
 /**
  * @author Jay Wu
  */

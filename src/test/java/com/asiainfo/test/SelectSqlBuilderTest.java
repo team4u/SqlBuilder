@@ -8,6 +8,8 @@ import org.team4u.sql.builder.util.SqlBuilders;
 
 import java.util.Arrays;
 
+import static org.team4u.sql.builder.expression.SqlExpressions.*;
+
 /**
  * @author Jay Wu
  */
