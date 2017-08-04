@@ -1,4 +1,4 @@
-package com.asiainfo.test;
+package org.team4u.test;
 
 import org.junit.Assert;
 import org.junit.Test;

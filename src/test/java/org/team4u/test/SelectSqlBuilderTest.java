@@ -1,4 +1,4 @@
-package com.asiainfo.test;
+package org.team4u.test;
 
 import com.xiaoleilu.hutool.util.CollectionUtil;
 import org.junit.Assert;

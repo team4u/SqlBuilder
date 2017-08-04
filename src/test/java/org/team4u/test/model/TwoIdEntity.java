@@ -1,4 +1,4 @@
-package com.asiainfo.test.model;
+package org.team4u.test.model;
 
 import org.team4u.sql.builder.entity.annotation.Column;
 import org.team4u.sql.builder.entity.annotation.Id;

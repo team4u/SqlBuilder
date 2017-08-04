@@ -16,7 +16,7 @@ public class UUIDForPkInvoker implements ActionInvoker {
     public <T> void invoke(Entity<T> entity, Object context, ActionType actionType) {
         for (Entity.Column column : entity.getIdColumns()) {
             if (StrUtil.isEmpty((String) column.getPropertyValue(context))) {
-                column.setPropertyValue(context, RandomUtil.randomUUID());
+                column.setPropertyValue(context, RandomUtil.randomUUID().replace("-", ""));
             }
         }
     }

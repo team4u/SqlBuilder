@@ -1,7 +1,5 @@
-package com.asiainfo.test;
+package org.team4u.test;
 
-import com.asiainfo.test.model.SingleIdEntity;
-import com.asiainfo.test.model.TwoIdEntity;
 import org.junit.Assert;
 import org.junit.Test;
 import org.team4u.sql.builder.Sql;
@@ -12,6 +10,8 @@ import org.team4u.sql.builder.entity.invoker.ActionInvoker;
 import org.team4u.sql.builder.entity.invoker.ActionInvokerManager;
 import org.team4u.sql.builder.expression.SqlExpressions;
 import org.team4u.sql.builder.util.SqlBuilders;
+import org.team4u.test.model.SingleIdEntity;
+import org.team4u.test.model.TwoIdEntity;
 
 import java.util.Arrays;
 
