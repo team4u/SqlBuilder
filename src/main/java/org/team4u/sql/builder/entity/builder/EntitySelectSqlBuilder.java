@@ -16,7 +16,11 @@ import org.team4u.sql.builder.expression.SqlExpression;
  */
 public class EntitySelectSqlBuilder<T> extends EntityWhereSqlBuilder<T> {
 
-    private SelectSqlBuilder sqlBuilder = new SelectSqlBuilder(entity.getTable());
+    private SelectSqlBuilder sqlBuilder;
+
+    public EntitySelectSqlBuilder() {
+        super();
+    }
 
     public EntitySelectSqlBuilder(Class<T> entityClass) {
         super(entityClass);
@@ -28,7 +32,17 @@ public class EntitySelectSqlBuilder<T> extends EntityWhereSqlBuilder<T> {
 
     public EntitySelectSqlBuilder(EntitySelectSqlBuilder<T> other) {
         super(other);
-        sqlBuilder = new SelectSqlBuilder(other.sqlBuilder);
+    }
+
+    protected EntitySelectSqlBuilder<T> setEntityClass(Class<T> entityClass) {
+        return this.setEntityClass(DEFAULT_ENTITY_MANAGER, entityClass);
+    }
+
+    @Override
+    protected EntitySelectSqlBuilder<T> setEntityClass(EntityManager entityManager, Class<T> entityClass) {
+        super.setEntityClass(entityManager, entityClass);
+        sqlBuilder = new SelectSqlBuilder(entity.getTable());
+        return this;
     }
 
     @Override

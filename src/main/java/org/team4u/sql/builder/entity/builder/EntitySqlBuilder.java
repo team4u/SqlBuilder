@@ -16,20 +16,28 @@ public abstract class EntitySqlBuilder<T> implements TableSqlBuilder {
     protected EntitySqlExpressionNameHandler nameHandler;
     protected Entity<T> entity;
 
+    public EntitySqlBuilder() {
+    }
+
     public EntitySqlBuilder(Class<T> entityClass) {
         this(DEFAULT_ENTITY_MANAGER, entityClass);
     }
 
     public EntitySqlBuilder(EntityManager entityManager, Class<T> entityClass) {
-        this.entityManager = entityManager;
-        entity = entityManager.createIfNotExist(entityClass);
-        nameHandler = new EntitySqlExpressionNameHandler(entity);
+        setEntityClass(entityManager, entityClass);
     }
 
     public EntitySqlBuilder(EntitySqlBuilder<T> other) {
         this.entity = other.entity;
         this.entityManager = other.entityManager;
         this.nameHandler = other.nameHandler;
+    }
+
+    protected EntityWhereSqlBuilder<T> setEntityClass(EntityManager entityManager, Class<T> entityClass) {
+        this.entityManager = entityManager;
+        entity = entityManager.createIfNotExist(entityClass);
+        nameHandler = new EntitySqlExpressionNameHandler(entity);
+        return null;
     }
 
     public Entity getEntity() {

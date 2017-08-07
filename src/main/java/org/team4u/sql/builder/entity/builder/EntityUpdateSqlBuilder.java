@@ -47,6 +47,17 @@ public class EntityUpdateSqlBuilder<T> extends EntityWhereSqlBuilder<T> {
         setColumns.addAll(other.setColumns);
     }
 
+    protected EntityUpdateSqlBuilder<T> setEntityClass(Class<T> entityClass) {
+        return this.setEntityClass(DEFAULT_ENTITY_MANAGER, entityClass);
+    }
+
+    @Override
+    protected EntityUpdateSqlBuilder<T> setEntityClass(EntityManager entityManager, Class<T> entityClass) {
+        super.setEntityClass(entityManager, entityClass);
+        sqlBuilder = new UpdateSqlBuilder(entity.getTable());
+        return this;
+    }
+
     public EntityUpdateSqlBuilder<T> where(String expr) {
         sqlBuilder.where(expr);
         return this;
