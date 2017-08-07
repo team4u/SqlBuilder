@@ -33,7 +33,7 @@ public abstract class EntitySqlBuilder<T> implements TableSqlBuilder {
         this.nameHandler = other.nameHandler;
     }
 
-    protected EntityWhereSqlBuilder<T> setEntityClass(EntityManager entityManager, Class<T> entityClass) {
+    public EntityWhereSqlBuilder<T> setEntityClass(EntityManager entityManager, Class<T> entityClass) {
         this.entityManager = entityManager;
         entity = entityManager.createIfNotExist(entityClass);
         nameHandler = new EntitySqlExpressionNameHandler(entity);

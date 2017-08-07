@@ -34,12 +34,12 @@ public class EntitySelectSqlBuilder<T> extends EntityWhereSqlBuilder<T> {
         super(other);
     }
 
-    protected EntitySelectSqlBuilder<T> setEntityClass(Class<T> entityClass) {
+    public EntitySelectSqlBuilder<T> setEntityClass(Class<T> entityClass) {
         return this.setEntityClass(DEFAULT_ENTITY_MANAGER, entityClass);
     }
 
     @Override
-    protected EntitySelectSqlBuilder<T> setEntityClass(EntityManager entityManager, Class<T> entityClass) {
+    public EntitySelectSqlBuilder<T> setEntityClass(EntityManager entityManager, Class<T> entityClass) {
         super.setEntityClass(entityManager, entityClass);
         sqlBuilder = new SelectSqlBuilder(entity.getTable());
         return this;

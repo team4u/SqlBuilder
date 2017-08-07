@@ -31,7 +31,7 @@ public abstract class EntityWhereSqlBuilder<T> extends EntitySqlBuilder<T> {
         this.entityObj = other.entityObj;
     }
 
-    protected EntityWhereSqlBuilder<T> setEntityClass(EntityManager entityManager, Class<T> entityClass) {
+    public EntityWhereSqlBuilder<T> setEntityClass(EntityManager entityManager, Class<T> entityClass) {
         super.setEntityClass(entityManager, entityClass);
         return this;
     }

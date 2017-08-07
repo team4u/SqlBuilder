@@ -42,12 +42,12 @@ public class EntityDeleteSqlBuilder<T> extends EntityWhereSqlBuilder<T> {
         this.sqlBuilder = new DeleteSqlBuilder(other.sqlBuilder);
     }
 
-    protected EntityDeleteSqlBuilder<T> setEntityClass(Class<T> entityClass) {
+    public EntityDeleteSqlBuilder<T> setEntityClass(Class<T> entityClass) {
         return this.setEntityClass(DEFAULT_ENTITY_MANAGER, entityClass);
     }
 
     @Override
-    protected EntityDeleteSqlBuilder<T> setEntityClass(EntityManager entityManager, Class<T> entityClass) {
+    public EntityDeleteSqlBuilder<T> setEntityClass(EntityManager entityManager, Class<T> entityClass) {
         super.setEntityClass(entityManager, entityClass);
         sqlBuilder = new DeleteSqlBuilder(entity.getTable());
         return this;
