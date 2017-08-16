@@ -50,13 +50,18 @@ public final class SqlExpressions {
 
             public void init(AbstractTableSqlBuilder creator) {
                 param = creator.allocateParameterName();
-                creator.setParameter(param, handler.handleValue(value));
+                if (value == null) {
+                    creator.setPlaceHolder(param, null);
+                } else {
+                    creator.setParameter(param, handler.handleValue(value));
+                }
             }
 
             public String toSql() {
-                return String.format("%s %s :%s",
+                return String.format("%s %s %s%s",
                         handler.handleExpression(expr),
                         handler.handleOperation(op),
+                        value == null ? "$" : ":",
                         param);
             }
         };

@@ -1,5 +1,6 @@
 package org.team4u.test;
 
+import com.xiaoleilu.hutool.lang.Dict;
 import com.xiaoleilu.hutool.util.CollectionUtil;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,14 +18,15 @@ public class SelectSqlBuilderTest {
 
     @Test
     public void create() {
-        Sql sql = SqlBuilders.select("test")
-                .from("test2")
-                .column("z1")
+        Sql sql = SqlBuilders.select("test t1")
+                .from("test2 t2")
+                .column("t1.z1")
                 .distinct()
-                .leftJoin("test3 test3.id = test2.id")
+                .leftJoin("test3 t3 t3.id = t2.id")
                 .where("a", "=", 1)
                 .and("b", "=", 2)
                 .and(in("b2", CollectionUtil.newArrayList(1, 2)))
+                .and(Dict.create().set("(>)x", "x1").set("y", "y2"))
                 .and(or(
                         and(
                                 exps("a", "=", 1),
@@ -37,16 +39,17 @@ public class SelectSqlBuilderTest {
                 )
                 .orIfNotNull("c", "=", 3)
                 .orIfNotNull("c", "=", null)
+                .or("z", "=", null)
                 .orderBy("d")
                 .orderBy("e", false)
                 .create();
 
-        Assert.assertEquals("select distinct z1 from test, test2 " +
-                "left join test3 test3.id = test2.id " +
-                "where a = ? and b = ? and b2 in (?, ?) " +
+        Assert.assertEquals("select distinct t1.z1 from test t1, test2 t2 " +
+                "left join test3 t3 t3.id = t2.id " +
+                "where a = ? and b = ? and b2 in (?, ?) and x > ? and y = ? " +
                 "and ((a = ? and b = ?) or (c = ? and d = ?)) " +
-                "or c = ? " +
+                "or c = ? or z = null " +
                 "order by d, e desc", sql.getContent());
-        Assert.assertEquals("[1, 2, 1, 2, 1, 2, 3, 4, 3]", Arrays.toString(sql.getParams()));
+        Assert.assertEquals("[1, 2, 1, 2, x1, y2, 1, 2, 3, 4, 3]", Arrays.toString(sql.getParams()));
     }
 }

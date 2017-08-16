@@ -29,11 +29,6 @@ public class ParameterizedSqlBuilder implements SqlBuilder, Cloneable, Serializa
     public ParameterizedSqlBuilder() {
     }
 
-    /**
-     * Copy constructor. Used by {@link #clone()}.
-     *
-     * @param other ParameterizedSqlCreator being cloned.
-     */
     protected ParameterizedSqlBuilder(ParameterizedSqlBuilder other) {
         this.sqlContent = other.sqlContent;
         for (String key : other.parameterMap.keySet()) {
@@ -46,10 +41,6 @@ public class ParameterizedSqlBuilder implements SqlBuilder, Cloneable, Serializa
         return new ParameterizedSqlBuilder(this);
     }
 
-    /**
-     * Replace all parameters with question marks, and build a list of
-     * parameter values in the same order.
-     */
     @Override
     public Sql create() {
         Sql sql = parseForParameter(sqlContent);

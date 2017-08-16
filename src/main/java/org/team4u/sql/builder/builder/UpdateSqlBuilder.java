@@ -35,7 +35,7 @@ public class UpdateSqlBuilder extends WhereSqlBuilder {
 
     @Override
     public String toString() {
-        StringBuilder sql = new StringBuilder("update ").append(table);
+        StringBuilder sql = new StringBuilder("update ").append(getTable());
         appendList(sql, sets, " set ", ", ");
         appendList(sql, wheres, " where ", " ");
         return sql.toString();

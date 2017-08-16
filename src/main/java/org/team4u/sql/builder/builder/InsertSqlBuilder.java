@@ -33,7 +33,7 @@ public class InsertSqlBuilder extends AbstractTableSqlBuilder {
 
     @Override
     public String toString() {
-        StringBuilder sql = new StringBuilder("insert into ").append(table).append(" (");
+        StringBuilder sql = new StringBuilder("insert into ").append(getTable()).append(" (");
         appendList(sql, columns, "", ", ");
         sql.append(") values (");
         appendList(sql, values, "", ", ");

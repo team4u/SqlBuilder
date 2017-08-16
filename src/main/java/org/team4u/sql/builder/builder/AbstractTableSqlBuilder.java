@@ -1,7 +1,10 @@
 package org.team4u.sql.builder.builder;
 
+import com.xiaoleilu.hutool.util.CollectionUtil;
+import com.xiaoleilu.hutool.util.StrUtil;
 import org.team4u.sql.builder.Sql;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -11,7 +14,7 @@ import java.util.List;
  */
 public abstract class AbstractTableSqlBuilder implements TableSqlBuilder {
 
-    protected String table;
+    protected List<String> tables = CollectionUtil.newArrayList();
 
     private ParameterizedSqlBuilder parameterizedSqlBuilder = new ParameterizedSqlBuilder();
     private int paramIndex;
@@ -19,8 +22,10 @@ public abstract class AbstractTableSqlBuilder implements TableSqlBuilder {
     public AbstractTableSqlBuilder() {
     }
 
-    public AbstractTableSqlBuilder(String table) {
-        this.table = table;
+    public AbstractTableSqlBuilder(String... tables) {
+        if (tables != null) {
+            this.tables.addAll(Arrays.asList(tables));
+        }
     }
 
     /**
@@ -29,7 +34,7 @@ public abstract class AbstractTableSqlBuilder implements TableSqlBuilder {
      * @param other AbstractSqlCreator being cloned.
      */
     public AbstractTableSqlBuilder(AbstractTableSqlBuilder other) {
-        this.table = other.table;
+        this.tables = other.tables;
         this.paramIndex = other.paramIndex;
         this.parameterizedSqlBuilder = new ParameterizedSqlBuilder((other.getParameterizedSqlBuilder()));
     }
@@ -53,9 +58,13 @@ public abstract class AbstractTableSqlBuilder implements TableSqlBuilder {
         parameterizedSqlBuilder.setParameter(name, value);
     }
 
+    public void setPlaceHolder(String name, Object value) {
+        parameterizedSqlBuilder.setPlaceHolder(name, value);
+    }
+
     @Override
     public String getTable() {
-        return table;
+        return StrUtil.join(",", tables);
     }
 
     /**

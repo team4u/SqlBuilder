@@ -7,6 +7,9 @@ import org.team4u.sql.builder.entity.Entity;
 import org.team4u.sql.builder.entity.EntityManager;
 import org.team4u.sql.builder.expression.SqlExpression;
 import org.team4u.sql.builder.expression.SqlExpressions;
+import org.team4u.sql.builder.util.WhereUtil;
+
+import java.util.Map;
 
 /**
  * @author Jay Wu
@@ -119,6 +122,22 @@ public abstract class EntityWhereSqlBuilder<T> extends EntitySqlBuilder<T> {
             } else {
                 and(sqlExpression);
             }
+        }
+
+        return this;
+    }
+
+    public EntityWhereSqlBuilder<T> and(Map<String, ?> params) {
+        for (SqlExpression sqlExpression : WhereUtil.toSqlExpressions(params)) {
+            and(sqlExpression);
+        }
+
+        return this;
+    }
+
+    public EntityWhereSqlBuilder<T> or(Map<String, ?> params) {
+        for (SqlExpression sqlExpression : WhereUtil.toSqlExpressions(params)) {
+            or(sqlExpression);
         }
 
         return this;

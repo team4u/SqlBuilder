@@ -3,9 +3,11 @@ package org.team4u.sql.builder.builder;
 
 import org.team4u.sql.builder.expression.SqlExpression;
 import org.team4u.sql.builder.expression.SqlExpressions;
+import org.team4u.sql.builder.util.WhereUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Jay Wu
@@ -17,8 +19,8 @@ public abstract class WhereSqlBuilder extends AbstractTableSqlBuilder {
     public WhereSqlBuilder() {
     }
 
-    public WhereSqlBuilder(String table) {
-        super(table);
+    public WhereSqlBuilder(String... tables) {
+        super(tables);
     }
 
     public WhereSqlBuilder(WhereSqlBuilder other) {
@@ -86,6 +88,22 @@ public abstract class WhereSqlBuilder extends AbstractTableSqlBuilder {
         }
 
         or(column, op, value);
+        return this;
+    }
+
+    public WhereSqlBuilder and(Map<String, ?> params) {
+        for (SqlExpression sqlExpression : WhereUtil.toSqlExpressions(params)) {
+            and(sqlExpression);
+        }
+
+        return this;
+    }
+
+    public WhereSqlBuilder or(Map<String, ?> params) {
+        for (SqlExpression sqlExpression : WhereUtil.toSqlExpressions(params)) {
+            or(sqlExpression);
+        }
+
         return this;
     }
 

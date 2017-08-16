@@ -18,7 +18,7 @@ public class DeleteSqlBuilder extends WhereSqlBuilder {
 
     @Override
     public String toString() {
-        StringBuilder sql = new StringBuilder("delete from ").append(table);
+        StringBuilder sql = new StringBuilder("delete from ").append(getTable());
         appendList(sql, wheres, " where ", " ");
         return sql.toString();
     }

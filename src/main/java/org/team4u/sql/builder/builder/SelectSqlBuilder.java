@@ -5,6 +5,7 @@ import org.team4u.sql.builder.expression.SqlExpression;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A SelectSqlCreator that you can use like a SelectSqlCreator.
@@ -16,8 +17,6 @@ public class SelectSqlBuilder extends WhereSqlBuilder {
     protected boolean distinct;
 
     protected List<Object> columns = new ArrayList<Object>();
-
-    protected List<String> tables = new ArrayList<String>();
 
     protected List<String> joins = new ArrayList<String>();
 
@@ -35,9 +34,8 @@ public class SelectSqlBuilder extends WhereSqlBuilder {
 
     protected boolean noWait;
 
-    public SelectSqlBuilder(String table) {
-        super(table);
-        tables.add(table);
+    public SelectSqlBuilder(String... tables) {
+        super(tables);
     }
 
     public SelectSqlBuilder(SelectSqlBuilder other) {
@@ -123,9 +121,16 @@ public class SelectSqlBuilder extends WhereSqlBuilder {
         return this;
     }
 
-    /**
-     * Alias for {@link #where(String)}.
-     */
+    public SelectSqlBuilder and(Map<String, ?> params) {
+        super.and(params);
+        return this;
+    }
+
+    public SelectSqlBuilder or(Map<String, ?> params) {
+        super.or(params);
+        return this;
+    }
+
     public SelectSqlBuilder and(String expr) {
         return where(expr);
     }
@@ -218,7 +223,6 @@ public class SelectSqlBuilder extends WhereSqlBuilder {
 
     @Override
     public String toString() {
-
         StringBuilder sql = new StringBuilder("select ");
 
         if (distinct) {

@@ -1,5 +1,6 @@
 package org.team4u.test;
 
+import com.xiaoleilu.hutool.lang.Dict;
 import org.junit.Assert;
 import org.junit.Test;
 import org.team4u.sql.builder.Sql;
@@ -32,11 +33,15 @@ public class EntityManagerTest {
                 .and(SqlExpressions.and(
                         SqlExpressions.exps("nameAndAge", ">", 1),
                         SqlExpressions.exps("nameAndAge", "<", 3)
-                )).create();
+                ))
+                .or(Dict.create().set("(=)nameAndAge", "x1"))
+                .create();
 
-        String expectContent = "select * from test where name1 = ? and (name_and_age > ? and name_and_age < ?)";
+        String expectContent = "select * from test where name1 = ? " +
+                "and (name_and_age > ? and name_and_age < ?) " +
+                "or name_and_age = ?";
         Assert.assertEquals(expectContent, sql.getContent());
-        Assert.assertEquals("[1, 1, 3]", Arrays.toString(sql.getParams()));
+        Assert.assertEquals("[1, 1, 3, x1]", Arrays.toString(sql.getParams()));
 
         GenericDialect dialect = new GenericDialect();
         Assert.assertEquals("select count(1) from (" + expectContent + ") count_table",

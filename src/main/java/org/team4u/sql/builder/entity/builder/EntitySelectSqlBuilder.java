@@ -9,6 +9,8 @@ import org.team4u.sql.builder.entity.annotation.ActionType;
 import org.team4u.sql.builder.entity.invoker.ActionInvokerManager;
 import org.team4u.sql.builder.expression.SqlExpression;
 
+import java.util.Map;
+
 /**
  * A SelectSqlCreator that you can use like a SqlBuilder.
  *
@@ -102,6 +104,16 @@ public class EntitySelectSqlBuilder<T> extends EntityWhereSqlBuilder<T> {
     @Override
     public EntitySelectSqlBuilder<T> or(SqlExpression sqlExpression) {
         super.or(sqlExpression);
+        return this;
+    }
+
+    public EntitySelectSqlBuilder and(Map<String, ?> params) {
+        super.and(params);
+        return this;
+    }
+
+    public EntitySelectSqlBuilder or(Map<String, ?> params) {
+        super.or(params);
         return this;
     }
 
