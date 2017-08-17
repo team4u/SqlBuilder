@@ -22,7 +22,7 @@ public class SelectSqlBuilderTest {
                 .from("test2 t2")
                 .column("t1.z1")
                 .distinct()
-                .leftJoin("test3 t3 t3.id = t2.id")
+                .leftJoin("test3 t3 on t3.id = t2.id")
                 .where("a", "=", 1)
                 .and("b", "=", 2)
                 .and(in("b2", CollectionUtil.newArrayList(1, 2)))
@@ -45,7 +45,7 @@ public class SelectSqlBuilderTest {
                 .create();
 
         Assert.assertEquals("select distinct t1.z1 from test t1, test2 t2 " +
-                "left join test3 t3 t3.id = t2.id " +
+                "left join test3 t3 on t3.id = t2.id " +
                 "where a = ? and b = ? and b2 in (?, ?) and x > ? and y = ? " +
                 "and ((a = ? and b = ?) or (c = ? and d = ?)) " +
                 "or c = ? or z = null " +

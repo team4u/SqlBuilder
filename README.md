@@ -78,11 +78,11 @@ Sql sql = SqlBuilders.select("test")
 以上代码将生成:
 
 ```sql
-select distinct z1
-from test, test2
-left join test3 test3.id = test2.id
-where a = ? and b = ? and b2 in (?, ?) or c = ?
-order by d, e desc
+SELECT DISTINCT z1
+FROM test, test2
+  LEFT JOIN test3 test3.id = test2.id
+WHERE a = ? AND b = ? AND b2 IN (?, ?) OR c = ?
+ORDER BY d, e DESC
 ```
 
 ```
@@ -122,8 +122,8 @@ params=[1, 2, 3, 4]
 
 ```java
 Sql sql = SqlBuilders.update("test")
-        .set("a", 1)
-        .set("b", 2)
+        .setValue("a", 1)
+        .setValue("b", 2)
         .where("c", "=", 3)
         .and("d", "=", 4)
         .or("e", "=", 5)
