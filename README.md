@@ -264,7 +264,7 @@ SqlContents.getInstance().register(new FileSqlContentManager("test.sql").watch(5
 
 ##### 自定义SQL内容管理器
 
-你可以定制自己的SQL内容管理器，如从数据库中加载SQL源，只需要实现SqlContentManager接口即可.
+你可以定制自己的SQL内容管理器，如从数据库中加载SQL源，只需要实现SqlContentManager接口即可.
 
 ```java
 /**
@@ -330,7 +330,7 @@ SqlContents.getInstance().register(new DbSqlContentManager());
 
 #### 获取Dialect
 
-SqlBuidler可以根据dataSource自动获取对应数据库的Dialect
+SqlBuilder可以根据dataSource自动获取对应数据库的Dialect，目前只支持Mysql类数据库。
 
 ```java
 Dialect dialect = DialectManager.INSTANCE.getDialect(dataSource)
