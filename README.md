@@ -4,9 +4,17 @@
 
 快速简单生成标准SQL字符串的工具类
 
-## Maven
+## System Requirements
 
-Add the following dependency to your POM:
+* JDK 1.7+
+
+## Features
+
+* 简单快速构建的SQL字符串
+* 轻量级ORM
+* 方便与其他持久化框架集成，[SimpleDao](https://github.com/team4u/SimpleDao)基于SqlBuilder实现了一套轻量级的持久化框架
+
+## Maven
 
 ```xml
 <dependency>
@@ -32,23 +40,24 @@ Add the following dependency to your POM:
 </dependency>
 ```
 
-## System Requirements
+添加仓库：
 
-* JDK 1.7+
+```xml
+<repositories>
+    <repository>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+        <id>bintray-team4u</id>
+        <name>bintray</name>
+        <url>https://dl.bintray.com/team4u/team4u</url>
+    </repository>
+</repositories>
+```
 
-## Features
+## 快速上手
 
-* 简单快速构建的SQL字符串
-* 轻量级ORM
-* 方便与其他持久化框架集成
-
-## SqlBuilders
-
-通过SqlBuilders提供的各种API,可以方便地构建各种复杂的SQL字符串.
-
-因为SqlBuilder仅专注于SQL字符串生成,所以可以非常方便与现有的持久化框架集成.
-
-[SimpleDao](https://github.com/team4u/SimpleDao)基于SqlBuilder实现了一套轻量级的持久化框架.
+通过SqlBuilders辅助类提供的各种API，可以方便地构建各种复杂的SQL字符串。
 
 ### Select
 
