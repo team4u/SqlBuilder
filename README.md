@@ -361,9 +361,9 @@ dialect.createPageSelect("select * from test where id = ?", 1, 0);
 select * from test where id = ? limit 1 offset 0
 ```
 
-## ORM
+## 实体类映射
 
-SqlBuilder实现了轻量级的ORM功能
+SqlBuilder实现了轻量级的实体类映射功能。
 
 ### 实体类定义
 
@@ -375,7 +375,7 @@ SqlBuilder定义了三种基本注解,分别为：
 
 * @Id 主键
 
-   auto：默认值为FALSE,若设置为TRUE,则表示数据库主键为自增长策略,SqlBuilder不做处理,仅为后续开发预留
+   auto：默认值为FALSE,若设置为TRUE,则表示数据库主键为自增长策略,SqlBuilder不做处理,仅为预留
 
 * @Column 字段
 
@@ -633,7 +633,7 @@ params=[1]
 * AFTER_UPDATE 更新后
 * AFTER_DELETE 删除后
 
-其中AFTER系列动作仅为预留定义,SqlBuilder不做处理,SqlBuilder仅处理BEFORE系列动作
+其中AFTER系列动作为预留定义,SqlBuilder不做处理,SqlBuilder仅处理BEFORE系列动作
 
 #### UUID主键生成策略
 
