@@ -11,7 +11,7 @@
 ## Features
 
 * 简单快速构建的SQL字符串
-* 轻量级ORM
+* 轻量级实体类映射
 * 方便与其他持久化框架集成，[SimpleDao](https://github.com/team4u/SimpleDao)基于SqlBuilder实现了一套轻量级的持久化框架
 
 ## Maven
