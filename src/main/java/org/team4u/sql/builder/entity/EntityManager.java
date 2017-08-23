@@ -48,6 +48,16 @@ public class EntityManager extends Registry<Class<?>, Entity<?>> {
         return null;
     }
 
+    public Entity findByClass(Class clazz) {
+        for (Entity entity : applicants.values()) {
+            if (entity.getClassRef() == clazz) {
+                return entity;
+            }
+        }
+
+        return null;
+    }
+
     public boolean isEntity(Class<?> entityClass) {
         return entityProcessor.isEntity(entityClass);
     }
