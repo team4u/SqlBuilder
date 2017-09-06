@@ -254,7 +254,7 @@ WHERE name = ?;
 params=[x]
 ```
 
-##### SQL修改自动加载
+#### SQL修改自动加载
 
 FileSqlContentManager支持SQL文件修改后自动刷新，执行watch可设置监控周期（秒）方法。
 
@@ -262,7 +262,7 @@ FileSqlContentManager支持SQL文件修改后自动刷新，执行watch可设置
 SqlContents.getInstance().register(new FileSqlContentManager("test.sql").watch(5));
 ```
 
-##### 自定义SQL内容管理器
+#### 自定义SQL内容管理器
 
 你可以定制自己的SQL内容管理器，如从数据库中加载SQL源，只需要实现SqlContentManager接口即可.
 
@@ -322,6 +322,48 @@ public interface SqlContentManager extends Registrar.Applicant<String> {
 
 ```java
 SqlContents.getInstance().register(new DbSqlContentManager());
+```
+
+#### SqlTemplate
+
+SqlBuilder集成[jetbrick-template](http://subchen.github.io/jetbrick-template/)实现了动态Sql模板。
+
+假设在test.sql文件中定义以下内容：
+
+```sql
+/* jet */
+SELECT *
+FROM client
+WHERE 1 = 1
+#if(x)
+AND x = :x
+#end
+#if(y)
+AND y = :y
+#end;
+```
+
+```java
+// 仅需全局初始化一次
+SqlContents.getInstance().setSqlTemplate(new JetbrickSqlTemplate());
+SqlContents.getInstance().register(new FileSqlContentManager("test.sql").watch(5));
+
+Sql sql = SqlBuilders.sqlKey("jet")
+        .setParameter("x", "x")
+        .create();
+```
+
+将生成以下sql内容：
+
+```sql
+SELECT *
+FROM client
+WHERE 1 = 1
+AND x = ?
+```
+
+```
+params=[x]
 ```
 
 ### Dialect

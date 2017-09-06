@@ -3,6 +3,7 @@ package org.team4u.sql.builder.builder;
 import com.xiaoleilu.hutool.log.Log;
 import com.xiaoleilu.hutool.log.LogFactory;
 import org.team4u.sql.builder.Sql;
+import org.team4u.sql.builder.content.SqlContents;
 
 import java.io.Serializable;
 import java.util.*;
@@ -43,7 +44,7 @@ public class ParameterizedSqlBuilder implements SqlBuilder, Cloneable, Serializa
 
     @Override
     public Sql create() {
-        Sql sql = parseForParameter(sqlContent);
+        Sql sql = parseForParameter(SqlContents.getInstance().getSqlTemplate().render(sqlContent, parameterMap));
         parseForPlaceHolder(sql);
 
         if (log.isDebugEnabled()) {
@@ -71,7 +72,7 @@ public class ParameterizedSqlBuilder implements SqlBuilder, Cloneable, Serializa
             }
         }
 
-        psSql.append(this.sqlContent.substring(index));
+        psSql.append(sqlContent.substring(index));
 
         return new Sql(psSql.toString(), paramValues);
     }
