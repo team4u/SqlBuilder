@@ -39,7 +39,7 @@ public class SqlContentManagerTest {
 
         Assert.assertEquals("SELECT *\n" +
                 "FROM client\n" +
-                "WHERE name = ?;", sql.getContent());
+                "WHERE name = ?", sql.getContent());
         Assert.assertEquals("[x]", Arrays.toString(sql.getParams()));
     }
 
@@ -55,8 +55,7 @@ public class SqlContentManagerTest {
         Assert.assertEquals("SELECT *\n" +
                 "FROM client\n" +
                 "WHERE 1 = 1\n" +
-                "AND x = ?\n" +
-                ";", sql.getContent());
+                "AND x = ?\n", sql.getContent());
         Assert.assertEquals("[x]", Arrays.toString(sql.getParams()));
     }
 }

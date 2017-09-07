@@ -19,7 +19,7 @@ public class Sql implements Serializable {
     }
 
     public Sql(String content, List<Object> params) {
-        this.content = content;
+        setContent(content);
         setParams(params);
     }
 
@@ -33,7 +33,11 @@ public class Sql implements Serializable {
     }
 
     public Sql setContent(String content) {
-        this.content = content;
+        if (content.endsWith(";")) {
+            this.content = content.substring(0, content.length() - 1);
+        } else {
+            this.content = content;
+        }
         return this;
     }
 
