@@ -64,12 +64,6 @@ public class EntitySelectSqlBuilder<T> extends EntityWhereSqlBuilder<T> {
     }
 
     @Override
-    public EntitySelectSqlBuilder<T> whereIfNotNull(String column, String op, Object value) {
-        super.whereIfNotNull(column, op, value);
-        return this;
-    }
-
-    @Override
     public EntitySelectSqlBuilder<T> and(String column, String op, Object value) {
         super.and(column, op, value);
         return this;
@@ -96,6 +90,18 @@ public class EntitySelectSqlBuilder<T> extends EntityWhereSqlBuilder<T> {
     @Override
     public EntitySelectSqlBuilder<T> orIfNotNull(String column, String op, Object value) {
         super.orIfNotNull(column, op, value);
+        return this;
+    }
+
+    @Override
+    public EntitySelectSqlBuilder<T> andIf(String column, String op, Object value, boolean cnd) {
+        super.andIf(column, op, value, cnd);
+        return this;
+    }
+
+    @Override
+    public EntitySelectSqlBuilder<T> orIf(String column, String op, Object value, boolean cnd) {
+        super.orIf(column, op, value, cnd);
         return this;
     }
 

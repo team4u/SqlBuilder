@@ -55,22 +55,17 @@ public abstract class EntityWhereSqlBuilder<T> extends EntitySqlBuilder<T> {
         return this;
     }
 
-    public EntityWhereSqlBuilder<T> whereIfNotNull(String column, String op, Object value) {
-        if (value == null) {
-            return this;
-        }
-
-        where(column, op, value);
-        return this;
-    }
-
     public EntityWhereSqlBuilder<T> and(String column, String op, Object value) {
         where(SqlExpressions.and(column, op, value));
         return this;
     }
 
     public EntityWhereSqlBuilder<T> andIfNotNull(String column, String op, Object value) {
-        if (value == null) {
+        return andIf(column, op, value, value != null);
+    }
+
+    public EntityWhereSqlBuilder<T> andIf(String column, String op, Object value, boolean cnd) {
+        if (!cnd) {
             return this;
         }
 
@@ -90,7 +85,11 @@ public abstract class EntityWhereSqlBuilder<T> extends EntitySqlBuilder<T> {
     }
 
     public EntityWhereSqlBuilder<T> orIfNotNull(String column, String op, Object value) {
-        if (value == null) {
+        return orIf(column, op, value, value != null);
+    }
+
+    public EntityWhereSqlBuilder<T> orIf(String column, String op, Object value, boolean cnd) {
+        if (!cnd) {
             return this;
         }
 

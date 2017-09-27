@@ -31,13 +31,17 @@ public class UpdateSqlBuilder extends WhereSqlBuilder {
         return this;
     }
 
-    public UpdateSqlBuilder setValueIfNotNull(String column, Object value) {
-        if (value == null) {
+    public UpdateSqlBuilder setValueIf(String column, Object value, boolean cnd) {
+        if (!cnd) {
             return this;
         }
 
         setValue(column, value);
         return this;
+    }
+
+    public UpdateSqlBuilder setValueIfNotNull(String column, Object value) {
+        return setValueIf(column, value, value != null);
     }
 
     @Override

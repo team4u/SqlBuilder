@@ -76,6 +76,11 @@ public class EntityManagerTest {
         Assert.assertEquals("update test set name1 = ? where id = ?", sql.getContent());
         Assert.assertEquals("[a, 1]", Arrays.toString(sql.getParams()));
 
+        sql = SqlBuilders.update(a).columns("name|nameAndAge").create();
+
+        Assert.assertEquals("update test set name_and_age = ?, name1 = ? where id = ?", sql.getContent());
+        Assert.assertEquals("[b, a, 1]", Arrays.toString(sql.getParams()));
+
         a.setNameAndAge(null);
         sql = SqlBuilders.update(a).setUpdateIgnoreNull(true).create();
 
@@ -101,6 +106,10 @@ public class EntityManagerTest {
 
         SingleIdEntity a = createA();
         sql = SqlBuilders.insert(a).create();
+        Assert.assertEquals("insert into test (id, name_and_age, name1) values (?, ?, ?)", sql.getContent());
+        Assert.assertEquals("[1, b, a]", Arrays.toString(sql.getParams()));
+
+        sql = SqlBuilders.insert(a).columns("name|nameAndAge").create();
         Assert.assertEquals("insert into test (id, name_and_age, name1) values (?, ?, ?)", sql.getContent());
         Assert.assertEquals("[1, b, a]", Arrays.toString(sql.getParams()));
 

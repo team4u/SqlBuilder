@@ -29,13 +29,17 @@ public class InsertSqlBuilder extends AbstractTableSqlBuilder {
         return this;
     }
 
-    public InsertSqlBuilder setValueIfNotNull(String column, Object value) {
-        if (value == null) {
+    public InsertSqlBuilder setValueIf(String column, Object value, boolean cnd) {
+        if (!cnd) {
             return this;
         }
 
         setValue(column, value);
         return this;
+    }
+
+    public InsertSqlBuilder setValueIfNotNull(String column, Object value) {
+        return setValueIf(column, value, value != null);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package org.team4u.sql.builder.entity.builder;
 
 
+import com.xiaoleilu.hutool.util.ReUtil;
+import org.team4u.kit.core.util.AssertUtil;
 import org.team4u.sql.builder.Sql;
 import org.team4u.sql.builder.builder.UpdateSqlBuilder;
 import org.team4u.sql.builder.builder.WhereSqlBuilder;
@@ -19,7 +21,7 @@ public class EntityUpdateSqlBuilder<T> extends EntityWhereSqlBuilder<T> {
 
     protected UpdateSqlBuilder sqlBuilder = new UpdateSqlBuilder(entity.getTable());
 
-    protected List<String> setColumns = new ArrayList<String>();
+    protected List<Entity.Column> setColumns = new ArrayList<>();
 
     protected boolean updateIgnoreNull;
 
@@ -79,8 +81,8 @@ public class EntityUpdateSqlBuilder<T> extends EntityWhereSqlBuilder<T> {
         return this;
     }
 
-    public EntityUpdateSqlBuilder<T> setValueIfNotNull(String name, Object value) {
-        if (value == null) {
+    public EntityUpdateSqlBuilder<T> setValueIf(String name, Object value, boolean cnd) {
+        if (!cnd) {
             return this;
         }
 
@@ -88,8 +90,27 @@ public class EntityUpdateSqlBuilder<T> extends EntityWhereSqlBuilder<T> {
         return this;
     }
 
+    public EntityUpdateSqlBuilder<T> setValueIfNotNull(String name, Object value) {
+        return setValueIf(name, value, value != null);
+    }
+
     public EntityUpdateSqlBuilder<T> column(String name) {
-        setColumns.add(entity.getColumnName(name));
+        setColumns.add(entity.getColumnWithFieldName(name));
+        return this;
+    }
+
+    public EntityUpdateSqlBuilder<T> columns(String regularNames) {
+        if (regularNames == null) {
+            return this;
+        }
+
+        for (Entity.Column column : entity.getColumns()) {
+            if (ReUtil.isMatch(regularNames, column.getProperty().getName())) {
+                column(column.getProperty().getName());
+            }
+        }
+
+        AssertUtil.notEmpty(setColumns, "Not column match|regularNames=" + regularNames);
         return this;
     }
 
@@ -104,13 +125,11 @@ public class EntityUpdateSqlBuilder<T> extends EntityWhereSqlBuilder<T> {
                         continue;
                     }
 
-                    column(column.getProperty().getName());
+                    setColumns.add(column);
                 }
             }
 
-            for (String columnName : setColumns) {
-                Entity.Column column = entity.getColumnWithColumnName(columnName);
-
+            for (Entity.Column column : setColumns) {
                 if (isUpdateIgnoreNull()) {
                     setValueIfNotNull(column.getProperty().getName(), column.getPropertyValue(entityObj));
                 } else {

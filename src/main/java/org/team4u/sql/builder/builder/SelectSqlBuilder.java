@@ -92,12 +92,6 @@ public class SelectSqlBuilder extends WhereSqlBuilder {
     }
 
     @Override
-    public SelectSqlBuilder whereIfNotNull(String column, String op, Object value) {
-        super.whereIfNotNull(column, op, value);
-        return this;
-    }
-
-    @Override
     public SelectSqlBuilder and(String column, String op, Object value) {
         super.and(column, op, value);
         return this;
@@ -118,6 +112,18 @@ public class SelectSqlBuilder extends WhereSqlBuilder {
     @Override
     public SelectSqlBuilder orIfNotNull(String column, String op, Object value) {
         super.orIfNotNull(column, op, value);
+        return this;
+    }
+
+    @Override
+    public SelectSqlBuilder andIf(String column, String op, Object value, boolean cnd) {
+        super.andIf(column, op, value, cnd);
+        return this;
+    }
+
+    @Override
+    public SelectSqlBuilder orIf(String column, String op, Object value, boolean cnd) {
+        super.orIf(column, op, value, cnd);
         return this;
     }
 

@@ -54,27 +54,22 @@ public abstract class WhereSqlBuilder extends AbstractTableSqlBuilder {
         return this;
     }
 
-    public WhereSqlBuilder whereIfNotNull(String column, String op, Object value) {
-        if (value == null) {
-            return this;
-        }
-
-        where(column, op, value);
-        return this;
-    }
-
     public WhereSqlBuilder and(String column, String op, Object value) {
         where(SqlExpressions.and(column, op, value));
         return this;
     }
 
-    public WhereSqlBuilder andIfNotNull(String column, String op, Object value) {
-        if (value == null) {
+    public WhereSqlBuilder andIf(String column, String op, Object value, boolean cnd) {
+        if (!cnd) {
             return this;
         }
 
         and(column, op, value);
         return this;
+    }
+
+    public WhereSqlBuilder andIfNotNull(String column, String op, Object value) {
+        return andIf(column, op, value, value != null);
     }
 
     public WhereSqlBuilder or(String column, String op, Object value) {
@@ -83,7 +78,11 @@ public abstract class WhereSqlBuilder extends AbstractTableSqlBuilder {
     }
 
     public WhereSqlBuilder orIfNotNull(String column, String op, Object value) {
-        if (value == null) {
+        return orIf(column, op, value, value != null);
+    }
+
+    public WhereSqlBuilder orIf(String column, String op, Object value, boolean cnd) {
+        if (!cnd) {
             return this;
         }
 

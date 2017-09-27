@@ -1,12 +1,17 @@
 package org.team4u.sql.builder.entity.builder;
 
 
+import com.xiaoleilu.hutool.util.ReUtil;
+import org.team4u.kit.core.util.AssertUtil;
 import org.team4u.sql.builder.Sql;
 import org.team4u.sql.builder.builder.InsertSqlBuilder;
 import org.team4u.sql.builder.entity.Entity;
 import org.team4u.sql.builder.entity.EntityManager;
 import org.team4u.sql.builder.entity.annotation.ActionType;
 import org.team4u.sql.builder.entity.invoker.ActionInvokerManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Jay Wu
@@ -16,6 +21,8 @@ public class EntityInsertSqlBuilder<T> extends EntitySqlBuilder<T> {
     protected InsertSqlBuilder sqlBuilder;
 
     protected Object entityObj;
+
+    protected List<Entity.Column> setColumns = new ArrayList<>();
 
     protected boolean insertIgnoreNull;
 
@@ -44,6 +51,31 @@ public class EntityInsertSqlBuilder<T> extends EntitySqlBuilder<T> {
         sqlBuilder = new InsertSqlBuilder(other.sqlBuilder);
     }
 
+    public EntityInsertSqlBuilder<T> column(String name) {
+        setColumns.add(entity.getColumnWithFieldName(name));
+        return this;
+    }
+
+    public EntityInsertSqlBuilder<T> columns(String regularNames) {
+        if (regularNames == null) {
+            return this;
+        }
+
+        for (Entity.Column column : entity.getColumns()) {
+            if (column.isId() && !column.isAutoId()) {
+                column(column.getProperty().getName());
+                continue;
+            }
+
+            if (ReUtil.isMatch(regularNames, column.getProperty().getName())) {
+                column(column.getProperty().getName());
+            }
+        }
+
+        AssertUtil.notEmpty(setColumns, "Not column match, regularNames=" + regularNames);
+        return this;
+    }
+
     public EntityInsertSqlBuilder<T> setValue(String name, Object value) {
         Entity.Column column = entity.getColumnWithFieldName(name);
         entity.checkColumn(column, name);
@@ -54,8 +86,8 @@ public class EntityInsertSqlBuilder<T> extends EntitySqlBuilder<T> {
         return this;
     }
 
-    public EntityInsertSqlBuilder<T> setValueIfNotNull(String name, Object value) {
-        if (value == null) {
+    public EntityInsertSqlBuilder<T> setValueIf(String name, Object value, boolean cnd) {
+        if (!cnd) {
             return this;
         }
 
@@ -63,15 +95,33 @@ public class EntityInsertSqlBuilder<T> extends EntitySqlBuilder<T> {
         return this;
     }
 
+    public EntityInsertSqlBuilder<T> setValueIfNotNull(String name, Object value) {
+        return setValueIf(name, value, value != null);
+    }
+
     @Override
     public Sql create() {
         if (entityObj != null) {
             ActionInvokerManager.getInstance().execute(entity, entityObj, ActionType.BEFORE_INSERT);
-            for (Entity.Column column : entity.getColumns()) {
-                if (isInsertIgnoreNull() && !column.isId()) {
-                    setValueIfNotNull(column.getProperty().getName(), column.getPropertyValue(entityObj));
+
+            if (setColumns.isEmpty()) {
+                setColumns.addAll(entity.getColumns());
+            }
+
+            for (Entity.Column column : setColumns) {
+                String name = column.getProperty().getName();
+                Object value = column.getPropertyValue(entityObj);
+
+                if (column.isId()) {
+                    if (value == null) {
+                        continue;
+                    }
+                }
+
+                if (isInsertIgnoreNull()) {
+                    setValueIfNotNull(name, value);
                 } else {
-                    setValue(column.getProperty().getName(), column.getPropertyValue(entityObj));
+                    setValue(name, value);
                 }
             }
         }
