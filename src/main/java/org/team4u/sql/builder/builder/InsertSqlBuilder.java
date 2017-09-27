@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A InsertCreator that you can use like a InsertCreator.
- *
  * @author Jay Wu
  */
 public class InsertSqlBuilder extends AbstractTableSqlBuilder {
@@ -28,6 +26,15 @@ public class InsertSqlBuilder extends AbstractTableSqlBuilder {
         columns.add(column);
         values.add(":" + column);
         setParameter(column, value);
+        return this;
+    }
+
+    public InsertSqlBuilder setValueIfNotNull(String column, Object value) {
+        if (value == null) {
+            return this;
+        }
+
+        setValue(column, value);
         return this;
     }
 

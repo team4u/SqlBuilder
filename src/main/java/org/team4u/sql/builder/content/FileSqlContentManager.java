@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.file.Path;
 import java.nio.file.WatchEvent;
 import java.util.List;
 import java.util.Map;
@@ -48,23 +49,25 @@ public class FileSqlContentManager implements SqlContentManager {
             for (File res : resources) {
                 WatchMonitor watchMonitor = WatchMonitor.create(res, WatchMonitor.ENTRY_MODIFY);
                 watchMonitor.setWatcher(new Watcher() {
+
                     @Override
-                    public void onCreate(WatchEvent<?> event) {
+                    public void onCreate(WatchEvent<?> watchEvent, Path path) {
                         refresh();
                     }
 
                     @Override
-                    public void onModify(WatchEvent<?> event) {
+                    public void onModify(WatchEvent<?> watchEvent, Path path) {
                         refresh();
                     }
 
                     @Override
-                    public void onDelete(WatchEvent<?> event) {
+                    public void onDelete(WatchEvent<?> watchEvent, Path path) {
                         refresh();
                     }
 
                     @Override
-                    public void onOverflow(WatchEvent<?> event) {
+                    public void onOverflow(WatchEvent<?> watchEvent, Path path) {
+
                     }
                 });
             }

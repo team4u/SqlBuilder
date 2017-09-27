@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A UpdateCreator that you can use like an UpdateBuilder.
- *
  * @author Jay Wu
  */
 public class UpdateSqlBuilder extends WhereSqlBuilder {
@@ -30,6 +28,15 @@ public class UpdateSqlBuilder extends WhereSqlBuilder {
     public UpdateSqlBuilder setValue(String column, Object value) {
         setValue(String.format("%s = :%s", column, column));
         setParameter(column, value);
+        return this;
+    }
+
+    public UpdateSqlBuilder setValueIfNotNull(String column, Object value) {
+        if (value == null) {
+            return this;
+        }
+
+        setValue(column, value);
         return this;
     }
 

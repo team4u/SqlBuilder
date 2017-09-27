@@ -17,6 +17,7 @@ public class UpdateSqlBuilderTest {
         Sql sql = new UpdateSqlBuilder("test")
                 .setValue("a", 1)
                 .setValue("b", 2)
+                .setValueIfNotNull("c", null)
                 .where("c", "=", 3)
                 .and("d", "=", 4)
                 .or("e", "=", 5)

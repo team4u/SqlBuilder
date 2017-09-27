@@ -20,7 +20,7 @@
 <dependency>
     <groupId>org.team4u.sql</groupId>
     <artifactId>sql-builder</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.3</version>
 </dependency>
 
 <dependency>
@@ -31,12 +31,12 @@
 <dependency>
     <groupId>com.xiaoleilu</groupId>
     <artifactId>hutool-core</artifactId>
-    <version>3.0.9</version>
+    <version>3.1.1</version>
 </dependency>
 <dependency>
     <groupId>com.xiaoleilu</groupId>
     <artifactId>hutool-log</artifactId>
-    <version>3.0.9</version>
+    <version>3.1.1</version>
 </dependency>
 ```
 

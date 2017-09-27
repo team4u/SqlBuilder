@@ -13,15 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A UpdateCreator that you can use like an UpdateBuilder.
- *
  * @author Jay Wu
  */
 public class EntityUpdateSqlBuilder<T> extends EntityWhereSqlBuilder<T> {
 
-    private UpdateSqlBuilder sqlBuilder = new UpdateSqlBuilder(entity.getTable());
+    protected UpdateSqlBuilder sqlBuilder = new UpdateSqlBuilder(entity.getTable());
 
-    private List<String> setColumns = new ArrayList<String>();
+    protected List<String> setColumns = new ArrayList<String>();
+
+    protected boolean updateIgnoreNull;
 
     public EntityUpdateSqlBuilder(Class<T> entityClass) {
         super(entityClass);
@@ -79,6 +79,15 @@ public class EntityUpdateSqlBuilder<T> extends EntityWhereSqlBuilder<T> {
         return this;
     }
 
+    public EntityUpdateSqlBuilder<T> setValueIfNotNull(String name, Object value) {
+        if (value == null) {
+            return this;
+        }
+
+        setValue(name, value);
+        return this;
+    }
+
     public EntityUpdateSqlBuilder<T> column(String name) {
         setColumns.add(entity.getColumnName(name));
         return this;
@@ -101,13 +110,27 @@ public class EntityUpdateSqlBuilder<T> extends EntityWhereSqlBuilder<T> {
 
             for (String columnName : setColumns) {
                 Entity.Column column = entity.getColumnWithColumnName(columnName);
-                setValue(column.getProperty().getName(), column.getPropertyValue(entityObj));
+
+                if (isUpdateIgnoreNull()) {
+                    setValueIfNotNull(column.getProperty().getName(), column.getPropertyValue(entityObj));
+                } else {
+                    setValue(column.getProperty().getName(), column.getPropertyValue(entityObj));
+                }
             }
 
             appendPkSqlExpression();
         }
 
         return sqlBuilder.create();
+    }
+
+    public boolean isUpdateIgnoreNull() {
+        return updateIgnoreNull;
+    }
+
+    public EntityUpdateSqlBuilder setUpdateIgnoreNull(boolean updateIgnoreNull) {
+        this.updateIgnoreNull = updateIgnoreNull;
+        return this;
     }
 
     @Override

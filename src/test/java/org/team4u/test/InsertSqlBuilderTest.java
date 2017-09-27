@@ -17,6 +17,7 @@ public class InsertSqlBuilderTest {
         Sql sql = new InsertSqlBuilder("test")
                 .setValue("a", 1)
                 .setValue("b", 2)
+                .setValueIfNotNull("c", null)
                 .create();
 
         Assert.assertEquals("insert into test (a, b) values (?, ?)", sql.getContent());

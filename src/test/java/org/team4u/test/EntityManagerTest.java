@@ -62,6 +62,7 @@ public class EntityManagerTest {
     public void update() {
         Sql sql = SqlBuilders.update(SingleIdEntity.class)
                 .setValue("name", 1)
+                .setValueIfNotNull("name", null)
                 .where("nameAndAge", "=", 2)
                 .create();
 
@@ -71,6 +72,12 @@ public class EntityManagerTest {
 
         SingleIdEntity a = createA();
         sql = SqlBuilders.update(a).column("name").create();
+
+        Assert.assertEquals("update test set name1 = ? where id = ?", sql.getContent());
+        Assert.assertEquals("[a, 1]", Arrays.toString(sql.getParams()));
+
+        a.setNameAndAge(null);
+        sql = SqlBuilders.update(a).setUpdateIgnoreNull(true).create();
 
         Assert.assertEquals("update test set name1 = ? where id = ?", sql.getContent());
         Assert.assertEquals("[a, 1]", Arrays.toString(sql.getParams()));
@@ -102,6 +109,11 @@ public class EntityManagerTest {
         Assert.assertEquals("insert into test (id, name_and_age, name1) values (?, ?, ?)", sql.getContent());
         Assert.assertNotNull(a.getId());
         Assert.assertEquals("[" + a.getId() + ", b, a]", Arrays.toString(sql.getParams()));
+
+        a.setNameAndAge(null);
+        sql = SqlBuilders.insert(a).setInsertIgnoreNull(true).create();
+        Assert.assertEquals("insert into test (id, name1) values (?, ?)", sql.getContent());
+        Assert.assertEquals("[" + a.getId() + ", a]", Arrays.toString(sql.getParams()));
     }
 
     @Test

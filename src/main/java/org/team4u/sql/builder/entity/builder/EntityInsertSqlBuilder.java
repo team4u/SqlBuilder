@@ -9,14 +9,15 @@ import org.team4u.sql.builder.entity.annotation.ActionType;
 import org.team4u.sql.builder.entity.invoker.ActionInvokerManager;
 
 /**
- * A InsertCreator that you can use like a InsertCreator.
- *
  * @author Jay Wu
  */
 public class EntityInsertSqlBuilder<T> extends EntitySqlBuilder<T> {
 
     protected InsertSqlBuilder sqlBuilder;
+
     protected Object entityObj;
+
+    protected boolean insertIgnoreNull;
 
     public EntityInsertSqlBuilder(Class<T> entityClass) {
         this(DEFAULT_ENTITY_MANAGER, entityClass);
@@ -53,15 +54,37 @@ public class EntityInsertSqlBuilder<T> extends EntitySqlBuilder<T> {
         return this;
     }
 
+    public EntityInsertSqlBuilder<T> setValueIfNotNull(String name, Object value) {
+        if (value == null) {
+            return this;
+        }
+
+        setValue(name, value);
+        return this;
+    }
+
     @Override
     public Sql create() {
         if (entityObj != null) {
             ActionInvokerManager.getInstance().execute(entity, entityObj, ActionType.BEFORE_INSERT);
             for (Entity.Column column : entity.getColumns()) {
-                setValue(column.getProperty().getName(), column.getPropertyValue(entityObj));
+                if (isInsertIgnoreNull() && !column.isId()) {
+                    setValueIfNotNull(column.getProperty().getName(), column.getPropertyValue(entityObj));
+                } else {
+                    setValue(column.getProperty().getName(), column.getPropertyValue(entityObj));
+                }
             }
         }
 
         return sqlBuilder.create();
+    }
+
+    public boolean isInsertIgnoreNull() {
+        return insertIgnoreNull;
+    }
+
+    public EntityInsertSqlBuilder setInsertIgnoreNull(boolean insertIgnoreNull) {
+        this.insertIgnoreNull = insertIgnoreNull;
+        return this;
     }
 }

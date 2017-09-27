@@ -12,8 +12,6 @@ import org.team4u.sql.builder.expression.SqlExpression;
 import java.util.Map;
 
 /**
- * A SelectSqlCreator that you can use like a SqlBuilder.
- *
  * @author Jay Wu
  */
 public class EntitySelectSqlBuilder<T> extends EntityWhereSqlBuilder<T> {
