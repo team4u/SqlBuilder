@@ -1,7 +1,7 @@
 package org.team4u.sql.builder.util;
 
-import com.xiaoleilu.hutool.lang.PatternPool;
-import com.xiaoleilu.hutool.util.CollectionUtil;
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.lang.PatternPool;
 import org.team4u.sql.builder.expression.SqlExpression;
 import org.team4u.sql.builder.expression.SqlExpressions;
 

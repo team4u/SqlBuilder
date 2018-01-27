@@ -1,7 +1,7 @@
 package org.team4u.sql.builder.entity.builder;
 
 
-import org.team4u.kit.core.util.AssertUtil;
+import cn.hutool.core.lang.Assert;
 import org.team4u.sql.builder.builder.WhereSqlBuilder;
 import org.team4u.sql.builder.entity.Entity;
 import org.team4u.sql.builder.entity.EntityManager;
@@ -104,8 +104,8 @@ public abstract class EntityWhereSqlBuilder<T> extends EntitySqlBuilder<T> {
     }
 
     public EntityWhereSqlBuilder<T> withPK(Object... pkList) {
-        AssertUtil.notEmpty(pkList, "PK list is empty");
-        AssertUtil.isTrue(entity.getIdColumns().size() == pkList.length,
+        Assert.notEmpty(pkList, "PK list is empty");
+        Assert.isTrue(entity.getIdColumns().size() == pkList.length,
                 "PK list do not match the entity id columns");
 
         for (int i = 0; i < entity.getIdColumns().size(); i++) {

@@ -1,17 +1,17 @@
 package org.team4u.sql.builder.content;
 
 
-import com.xiaoleilu.hutool.io.FileUtil;
-import com.xiaoleilu.hutool.io.IoUtil;
-import com.xiaoleilu.hutool.io.watch.WatchMonitor;
-import com.xiaoleilu.hutool.io.watch.Watcher;
-import com.xiaoleilu.hutool.log.Log;
-import com.xiaoleilu.hutool.log.LogFactory;
-import com.xiaoleilu.hutool.util.CharsetUtil;
-import com.xiaoleilu.hutool.util.CollectionUtil;
-import com.xiaoleilu.hutool.util.StrUtil;
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.io.watch.WatchMonitor;
+import cn.hutool.core.io.watch.Watcher;
+import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.CharsetUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import org.team4u.kit.core.log.LogMessage;
-import org.team4u.kit.core.util.AssertUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -174,7 +174,7 @@ public class FileSqlContentManager implements SqlContentManager {
     @Override
     public synchronized void create(String key, String value) {
         log.debug("key=[{}], sql=[{}]", key, value);
-        AssertUtil.isFalse(!isAllowDuplicate() && sqlList.containsKey(key), "Duplicate sql key=[" + key + "]");
+        Assert.isFalse(!isAllowDuplicate() && sqlList.containsKey(key), "Duplicate sql key=[" + key + "]");
         sqlList.put(key, value);
     }
 

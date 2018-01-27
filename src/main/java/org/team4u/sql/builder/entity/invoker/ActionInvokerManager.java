@@ -1,7 +1,7 @@
 package org.team4u.sql.builder.entity.invoker;
 
+import cn.hutool.core.lang.Assert;
 import org.team4u.kit.core.lang.Registry;
-import org.team4u.kit.core.util.AssertUtil;
 import org.team4u.sql.builder.entity.Entity;
 import org.team4u.sql.builder.entity.annotation.Action;
 import org.team4u.sql.builder.entity.annotation.ActionType;
@@ -22,11 +22,11 @@ public class ActionInvokerManager extends Registry<String, ActionInvoker> {
     }
 
     public void execute(Entity entity, Action action, Object context) {
-        AssertUtil.notNull(context, "context is null(entity=%s)", entity.getClassRef());
-        AssertUtil.notNull(entity, "context is not a table(context=%s)", context);
+        Assert.notNull(context, "context is null(entity=%s)", entity.getClassRef());
+        Assert.notNull(entity, "context is not a table(context=%s)", context);
 
         ActionInvoker invoker = get(action.key());
-        AssertUtil.notNull(invoker, "Can't find ActionInvoker(key=%s,entity=%s)", action.key(), entity.getClassRef());
+        Assert.notNull(invoker, "Can't find ActionInvoker(key=%s,entity=%s)", action.key(), entity.getClassRef());
 
         invoker.invoke(entity, context, action.actionType());
     }

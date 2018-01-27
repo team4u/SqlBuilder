@@ -1,7 +1,7 @@
 package org.team4u.sql.builder.builder;
 
-import com.xiaoleilu.hutool.log.Log;
-import com.xiaoleilu.hutool.log.LogFactory;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import org.team4u.sql.builder.Sql;
 import org.team4u.sql.builder.content.SqlContents;
 

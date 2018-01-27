@@ -1,6 +1,6 @@
 package org.team4u.sql.builder;
 
-import com.xiaoleilu.hutool.util.CollectionUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import org.team4u.kit.core.lang.EmptyValue;
 
 import java.io.Serializable;

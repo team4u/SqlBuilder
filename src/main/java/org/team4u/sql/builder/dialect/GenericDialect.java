@@ -1,7 +1,7 @@
 package org.team4u.sql.builder.dialect;
 
-import com.xiaoleilu.hutool.log.Log;
-import com.xiaoleilu.hutool.log.LogFactory;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 
 import javax.sql.DataSource;
 import java.sql.DatabaseMetaData;

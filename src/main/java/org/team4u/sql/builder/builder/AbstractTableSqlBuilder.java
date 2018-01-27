@@ -1,7 +1,7 @@
 package org.team4u.sql.builder.builder;
 
-import com.xiaoleilu.hutool.util.CollectionUtil;
-import com.xiaoleilu.hutool.util.StrUtil;
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import org.team4u.sql.builder.Sql;
 
 import java.util.Arrays;

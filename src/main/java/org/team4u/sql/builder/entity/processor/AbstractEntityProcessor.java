@@ -1,8 +1,8 @@
 package org.team4u.sql.builder.entity.processor;
 
-import com.xiaoleilu.hutool.util.ReflectUtil;
-import com.xiaoleilu.hutool.util.StrUtil;
-import org.team4u.kit.core.util.AssertUtil;
+import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.ReflectUtil;
+import cn.hutool.core.util.StrUtil;
 import org.team4u.kit.core.util.ValueUtil;
 import org.team4u.sql.builder.entity.Entity;
 import org.team4u.sql.builder.entity.annotation.Action;
@@ -21,7 +21,7 @@ public abstract class AbstractEntityProcessor implements EntityProcessor {
     @Override
     public <T> Entity<T> toEntity(Class<T> clazz) {
         String tableName = getTableName(clazz);
-        AssertUtil.notNull(tableName, String.format("Class is not entity(class=%s)", clazz));
+        Assert.notNull(tableName, String.format("Class is not entity(class=%s)", clazz));
 
         Entity<T> entity = new Entity<T>();
         entity.setClassRef(clazz);

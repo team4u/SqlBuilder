@@ -1,8 +1,8 @@
 package org.team4u.sql.builder.entity.builder;
 
 
-import com.xiaoleilu.hutool.util.ReUtil;
-import org.team4u.kit.core.util.AssertUtil;
+import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.ReUtil;
 import org.team4u.sql.builder.Sql;
 import org.team4u.sql.builder.builder.InsertSqlBuilder;
 import org.team4u.sql.builder.entity.Entity;
@@ -72,7 +72,7 @@ public class EntityInsertSqlBuilder<T> extends EntitySqlBuilder<T> {
             }
         }
 
-        AssertUtil.notEmpty(setColumns, "Not column match, regularNames=" + regularNames);
+        Assert.notEmpty(setColumns, "Not column match, regularNames=" + regularNames);
         return this;
     }
 

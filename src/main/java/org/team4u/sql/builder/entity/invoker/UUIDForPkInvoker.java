@@ -1,7 +1,7 @@
 package org.team4u.sql.builder.entity.invoker;
 
-import com.xiaoleilu.hutool.util.RandomUtil;
-import com.xiaoleilu.hutool.util.StrUtil;
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.StrUtil;
 import org.team4u.sql.builder.entity.Entity;
 import org.team4u.sql.builder.entity.annotation.ActionType;
 

@@ -1,7 +1,7 @@
 package org.team4u.test;
 
-import com.xiaoleilu.hutool.lang.Dict;
-import com.xiaoleilu.hutool.util.CollectionUtil;
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.lang.Dict;
 import org.junit.Assert;
 import org.junit.Test;
 import org.team4u.sql.builder.Sql;

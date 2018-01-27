@@ -1,9 +1,9 @@
 package org.team4u.sql.builder.entity;
 
-import com.xiaoleilu.hutool.util.ReflectUtil;
+import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.ReflectUtil;
 import org.team4u.kit.core.error.ExceptionUtil;
 import org.team4u.kit.core.lang.Registry;
-import org.team4u.kit.core.util.AssertUtil;
 import org.team4u.sql.builder.entity.annotation.Action;
 
 import java.lang.reflect.Field;
@@ -57,7 +57,7 @@ public class Entity<T> implements Registry.Applicant<Class<?>> {
     }
 
     public void checkColumn(Column column, String name) {
-        AssertUtil.notNull(column,
+        Assert.notNull(column,
                 String.format("Column is not exist(table=%s,name=%s)", table, name));
     }
 
